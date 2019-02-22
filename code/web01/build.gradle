@@ -1,0 +1,11 @@
+subprojects {
+    apply plugin: 'java'
+    group = 'com.javasecurity'
+    version = '1.0'
+}
+
+project (':web') {
+    dependencies {
+        compile project(':dependency')
+    }
+}
