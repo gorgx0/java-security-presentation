@@ -1,9 +1,9 @@
 <map version="freeplane 1.7.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
-<node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1550235604152" STYLE="oval">
+<node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1550703628200" STYLE="oval">
 <font SIZE="18"/>
 <hook NAME="MapStyle">
-    <properties edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff" fit_to_viewport="false"/>
+    <properties fit_to_viewport="false" edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff"/>
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24.0 pt">
@@ -63,7 +63,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="15" RULE="ON_BRANCH_CREATION"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="16" RULE="ON_BRANCH_CREATION"/>
 <node TEXT="java 11" POSITION="right" ID="ID_1820615439" CREATED="1550098247341" MODIFIED="1550098250921">
 <edge COLOR="#ff0000"/>
 <node TEXT="location of default policies and security configs" ID="ID_900403649" CREATED="1550098258170" MODIFIED="1550098747298"/>
@@ -111,6 +111,9 @@
 </node>
 <node TEXT="apache fortress" POSITION="left" ID="ID_1019358576" CREATED="1550339619430" MODIFIED="1550339633941" LINK="https://directory.apache.org/fortress/">
 <edge COLOR="#ff00ff"/>
+</node>
+<node TEXT="https://docs.oracle.com/javase/tutorial/security/index.html" POSITION="left" ID="ID_800393398" CREATED="1550703617145" MODIFIED="1550703628193" LINK="https://docs.oracle.com/javase/tutorial/security/index.html" HGAP_QUANTITY="52.249998860061204 pt" VSHIFT_QUANTITY="79.49999763071544 pt">
+<edge COLOR="#00ffff"/>
 </node>
 </node>
 </map>
