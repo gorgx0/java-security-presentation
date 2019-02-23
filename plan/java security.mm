@@ -1,6 +1,6 @@
 <map version="freeplane 1.7.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
-<node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1550703628200" STYLE="oval">
+<node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1550953824106" STYLE="oval">
 <font SIZE="18"/>
 <hook NAME="MapStyle">
     <properties fit_to_viewport="false" edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff"/>
@@ -63,7 +63,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="16" RULE="ON_BRANCH_CREATION"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="18" RULE="ON_BRANCH_CREATION"/>
 <node TEXT="java 11" POSITION="right" ID="ID_1820615439" CREATED="1550098247341" MODIFIED="1550098250921">
 <edge COLOR="#ff0000"/>
 <node TEXT="location of default policies and security configs" ID="ID_900403649" CREATED="1550098258170" MODIFIED="1550098747298"/>
@@ -112,8 +112,13 @@
 <node TEXT="apache fortress" POSITION="left" ID="ID_1019358576" CREATED="1550339619430" MODIFIED="1550339633941" LINK="https://directory.apache.org/fortress/">
 <edge COLOR="#ff00ff"/>
 </node>
-<node TEXT="https://docs.oracle.com/javase/tutorial/security/index.html" POSITION="left" ID="ID_800393398" CREATED="1550703617145" MODIFIED="1550703628193" LINK="https://docs.oracle.com/javase/tutorial/security/index.html" HGAP_QUANTITY="52.249998860061204 pt" VSHIFT_QUANTITY="79.49999763071544 pt">
-<edge COLOR="#00ffff"/>
+<node TEXT="links" POSITION="left" ID="ID_1839861543" CREATED="1550953363573" MODIFIED="1550953824104" HGAP_QUANTITY="22.249999754130847 pt" VSHIFT_QUANTITY="79.49999763071544 pt">
+<edge COLOR="#7c0000"/>
+<node TEXT="https://blog.frankel.ch/jvm-security/2/" ID="ID_1891855162" CREATED="1550953384471" MODIFIED="1550953384471" LINK="https://blog.frankel.ch/jvm-security/2/"/>
+<node TEXT="https://blog.frankel.ch/jvm-security/1/" ID="ID_8896570" CREATED="1550953416263" MODIFIED="1550953416263" LINK="https://blog.frankel.ch/jvm-security/1/"/>
+<node TEXT="https://blog.frankel.ch/java-security-manager/" ID="ID_1994842628" CREATED="1550953428794" MODIFIED="1550953428794" LINK="https://blog.frankel.ch/java-security-manager/"/>
+<node TEXT="https://blog.frankel.ch/jvm-security/3/" ID="ID_168755820" CREATED="1550953448813" MODIFIED="1550953448813" LINK="https://blog.frankel.ch/jvm-security/3/"/>
+<node TEXT="https://docs.oracle.com/javase/tutorial/security/index.html" ID="ID_800393398" CREATED="1550703617145" MODIFIED="1550953821910" LINK="https://docs.oracle.com/javase/tutorial/security/index.html" HGAP_QUANTITY="52.99999883770946 pt" VSHIFT_QUANTITY="46.49999861419205 pt"/>
 </node>
 </node>
 </map>
