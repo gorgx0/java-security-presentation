@@ -4,8 +4,15 @@ subprojects {
     version = '1.0'
 }
 
+
 project (':web') {
     dependencies {
         compile project(':dependency')
+
     }
+}
+
+task deploy(type: Copy) {
+    from "web/build/libs/web-1.0.war"
+    into "/home/gorg/tmp/apache-tomcat-9.0.16/webapps"
 }

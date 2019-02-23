@@ -2,3 +2,10 @@ plugins {
     id 'java'
 }
 
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+}

@@ -12,4 +12,8 @@ public class SensitiveOperation {
         return new String(bytes);
     }
 
+    public void kaaboom() {
+        System.exit(1);
+    }
+
 }
