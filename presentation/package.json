@@ -1,0 +1,14 @@
+{
+  "name": "java-security-presentation",
+  "version": "1.0.0",
+  "description": "RevealJS based presentation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "marcin.krasowski@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "reveal.js": "^3.7.0"
+  }
+}
