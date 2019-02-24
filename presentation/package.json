@@ -10,5 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "reveal.js": "^3.7.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
   }
 }
