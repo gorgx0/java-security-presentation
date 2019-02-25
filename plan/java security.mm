@@ -3,7 +3,7 @@
 <node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1550953824106" STYLE="oval">
 <font SIZE="18"/>
 <hook NAME="MapStyle">
-    <properties fit_to_viewport="false" edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff"/>
+    <properties edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff" fit_to_viewport="false"/>
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24.0 pt">
@@ -63,7 +63,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="18" RULE="ON_BRANCH_CREATION"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="19" RULE="ON_BRANCH_CREATION"/>
 <node TEXT="java 11" POSITION="right" ID="ID_1820615439" CREATED="1550098247341" MODIFIED="1550098250921">
 <edge COLOR="#ff0000"/>
 <node TEXT="location of default policies and security configs" ID="ID_900403649" CREATED="1550098258170" MODIFIED="1550098747298"/>
@@ -72,7 +72,9 @@
 </node>
 <node TEXT="running secure code" POSITION="right" ID="ID_1091766756" CREATED="1550100241432" MODIFIED="1550100774501">
 <edge COLOR="#00ff00"/>
-<node TEXT="add   -Djava.security.manager" ID="ID_1510986854" CREATED="1550102296473" MODIFIED="1550102505510"/>
+<node TEXT="add   -Djava.security.manager" ID="ID_1510986854" CREATED="1550102296473" MODIFIED="1550102505510">
+<node TEXT="https://docs.oracle.com/javase/7/docs/technotes/guides/security/troubleshooting-security.html" ID="ID_396886654" CREATED="1551121059826" MODIFIED="1551121059826" LINK="https://docs.oracle.com/javase/7/docs/technotes/guides/security/troubleshooting-security.html"/>
+</node>
 <node TEXT="overriding default policy" ID="ID_2458051" CREATED="1550102532400" MODIFIED="1550102543962"/>
 <node TEXT="default forbid all - pick allowed" ID="ID_1114406130" CREATED="1550102545455" MODIFIED="1550102594430"/>
 <node TEXT="default allow all - pick forbidden" ID="ID_1564348398" CREATED="1550102563718" MODIFIED="1550102600979"/>
@@ -80,6 +82,22 @@
 <node TEXT="Subject" ID="ID_1061611218" CREATED="1550172326062" MODIFIED="1550172331771"/>
 <node TEXT="Principal" ID="ID_548387425" CREATED="1550172332272" MODIFIED="1550172337819"/>
 <node TEXT="Login" ID="ID_383361930" CREATED="1550172344349" MODIFIED="1550172348142"/>
+</node>
+</node>
+<node TEXT="logging" POSITION="right" ID="ID_1595586334" CREATED="1551120481397" MODIFIED="1551120487006">
+<edge COLOR="#007c00"/>
+<node ID="ID_1751240400" CREATED="1551120830098" MODIFIED="1551120830098"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <pre http-equiv="content-type" content="text/html; charset=utf-8" style="font-family: Courier New, Monaco, Courier, monospace; color: rgb(68, 68, 68); font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; word-spacing: 0px">-Djava.security.debug=help</pre>
+  </body>
+</html>
+
+</richcontent>
 </node>
 </node>
 <node TEXT="simplified container" POSITION="right" ID="ID_1769551029" CREATED="1550172374183" MODIFIED="1550172380524">
