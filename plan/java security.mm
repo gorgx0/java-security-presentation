@@ -63,7 +63,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="19" RULE="ON_BRANCH_CREATION"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="20" RULE="ON_BRANCH_CREATION"/>
 <node TEXT="java 11" POSITION="right" ID="ID_1820615439" CREATED="1550098247341" MODIFIED="1550098250921">
 <edge COLOR="#ff0000"/>
 <node TEXT="location of default policies and security configs" ID="ID_900403649" CREATED="1550098258170" MODIFIED="1550098747298"/>
@@ -114,6 +114,10 @@
 <node TEXT="docker run -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin -p 8080:8080  jboss/keycloak" ID="ID_1680569229" CREATED="1550198698425" MODIFIED="1550198698425"/>
 <node TEXT="apache syncope" ID="ID_760041213" CREATED="1550613936824" MODIFIED="1550613942318"/>
 <node TEXT="https://evolveum.com/midpoint/" ID="ID_325237441" CREATED="1550614053620" MODIFIED="1550614053620" LINK="https://evolveum.com/midpoint/"/>
+</node>
+<node TEXT="alternative/additional security managers" POSITION="right" ID="ID_1286814896" CREATED="1551221938245" MODIFIED="1551221951470">
+<edge COLOR="#7c007c"/>
+<node TEXT="jsboss/wildfly" ID="ID_1223458764" CREATED="1551221956422" MODIFIED="1551221963981"/>
 </node>
 <node TEXT="using keycloack login modue" POSITION="right" ID="ID_464581766" CREATED="1550235491964" MODIFIED="1550235604151" HGAP_QUANTITY="15.499999955296518 pt" VSHIFT_QUANTITY="23.249999307096026 pt">
 <edge COLOR="#00ff00"/>
