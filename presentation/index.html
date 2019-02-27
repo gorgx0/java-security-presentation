@@ -22,8 +22,10 @@
                     <li class="fragment strike">JSSE</li>
                     <li class="fragment strike">Java GSS API</li>
                     <li class="fragment strike">Java SASL API</li>
-                    <li class="fragment strike">PKI utilities</li>
-                    <li>Permissions/Policies/Sandbox</li>
+                    <li><span  class="fragment strike">PKI utilities</span>
+                        <span class="fragment fade-in" style="text-decoration: none">well some</span>
+                    </li>
+                    <li>Sandbox/Policies/Permissions</li>
                     <li>JAAS</li>
                 </ul>
                 <aside class="notes">
@@ -32,8 +34,47 @@
             </section>
 
             <section>
-                <h2>Another</h2>
+                <h3>Java version used</h3>
+                <pre><code>
+vagrant@contrib-stretch:~$ java -version
+java version "11.0.2" 2018-10-16 LTS
+Java(TM) SE Runtime Environment 18.9 (build 11.0.2+7-LTS)
+Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.2+7-LTS, mixed mode)
+                </code></pre>
             </section>
+
+            <section>
+                <h3>JAVA_HOME</h3>
+                <pre><code>
+vagrant@contrib-stretch:~$ echo $JAVA_HOME 
+/usr/lib/jvm/java-11-oracle
+                </code></pre>
+            </section>
+
+            <section>
+                <pre><code>
+vagrant@contrib-stretch:~$ cd $JAVA_HOME/conf/security/
+vagrant@contrib-stretch:/usr/lib/jvm/java-11-oracle/conf/security$ tree
+.
+├── java.policy -> /etc/java-11-oracle/conf/security/java.policy
+├── java.security -> /etc/java-11-oracle/conf/security/java.security
+└── policy
+    ├── limited
+    │   ├── default_local.policy
+    │   ├── default_US_export.policy
+    │   └── exempt_local.policy
+    ├── README.txt
+    └── unlimited
+        ├── default_local.policy
+        └── default_US_export.policy
+
+3 directories, 8 files
+vagrant@contrib-stretch:/usr/lib/jvm/java-11-oracle/conf/security$ 
+                </code></pre>
+            </section>
+                </section>
+    
+
         </div>
     </div>
     trdt
