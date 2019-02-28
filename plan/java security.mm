@@ -68,6 +68,9 @@
 <edge COLOR="#ff0000"/>
 <node TEXT="location of default policies and security configs" ID="ID_900403649" CREATED="1550098258170" MODIFIED="1550098747298"/>
 <node TEXT="limited vs. unlimited cryptography" ID="ID_930921963" CREATED="1550098751036" MODIFIED="1550098766113"/>
+<node TEXT="crypto providers" ID="ID_332459314" CREATED="1551313508561" MODIFIED="1551313514385">
+<node TEXT="https://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html" ID="ID_55873732" CREATED="1551313515719" MODIFIED="1551313515719" LINK="https://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html"/>
+</node>
 <node TEXT="enough on crypto as such so far" ID="ID_1049094376" CREATED="1550099585611" MODIFIED="1550099594858"/>
 </node>
 <node TEXT="running secure code" POSITION="right" ID="ID_1091766756" CREATED="1550100241432" MODIFIED="1550100774501">
