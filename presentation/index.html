@@ -77,6 +77,25 @@ vagrant@contrib-stretch:/usr/lib/jvm/java-11-oracle/conf/security$
                 java.security
             </section>
             
+            <section>
+                <h2>system policy file</h2>
+                java.policy
+            </section>
+
+            <section>
+                <h1>Now, show me the code</h1>
+                Standalone app with a dependency
+            </section>
+
+            <section>
+                <code class="fragment fade-out">-Djava.security.manager</code>
+                
+                <code class="fragment fade">System.setSecurityManager(new SecurityManager());</code>
+            </section>
+
+            <section>
+                    -Djava.security.debug=<span class="fragment fade">all</span>
+            </section>
         </div>
     </div>
     trdt
