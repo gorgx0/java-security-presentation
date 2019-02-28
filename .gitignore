@@ -5,3 +5,4 @@
 **/node_modules/
 presentation/dist/
 **/out/
+.vagrant/
