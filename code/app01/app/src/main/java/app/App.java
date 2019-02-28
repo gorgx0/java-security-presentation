@@ -26,6 +26,7 @@ public class App {
     }
 
     public static void main(String[] args) throws IOException {
+//        System.setSecurityManager(new SecurityManager());
         App app = new App(new RiskyServiceImpl());
         System.out.println("*************** APP ****************");
         System.out.println(app.getSecretKey());
