@@ -89,6 +89,14 @@ security/
             <section>
                     -Djava.security.debug=<span class="fragment fade">all</span>
             </section>
+
+            <section>
+                JAVA_OPTS='-Djava.security.debug=policy <br>
+                -Djava.security.policy==my.policy <br>
+                -Djava.security.manager' <br>
+                KEYFILE_LOCATION=/etc/os-release <br>
+                bin/app
+            </section>
         </div>
     </div>
     trdt
