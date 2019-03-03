@@ -4,6 +4,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SCRIPT
     echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list.d/backoprts.list
     apt-get update -y
-    apt-get install -y openjdk-11-jdk-headless
+    apt-get install -y openjdk-11-jdk-headless vim zip unzip curl
   SCRIPT
 end
