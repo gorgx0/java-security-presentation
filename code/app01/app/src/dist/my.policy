@@ -1,7 +1,7 @@
 // grant {
 //     permission java.security.AllPermission;
 // };
-//
+
 // grant {
 //      permission java.lang.RuntimePermission "getenv.KEYFILE_LOCATION";
 //      permission java.io.FilePermission "/etc/-", "read";
@@ -15,4 +15,14 @@
 // grant codeBase "file:lib/dependency.jar"{
 //       permission java.lang.RuntimePermission "getenv.KEYFILE_LOCATION";
 //       permission java.io.FilePermission "/etc/-", "read";
+// };
+
+// grant codeBase "jrt:/app" {
+//        permission java.lang.RuntimePermission "getenv.KEYFILE_LOCATION";
+//        permission java.io.FilePermission "/etc/-", "read";
+// };
+
+// grant codeBase "jrt:/dependency" {
+//        permission java.lang.RuntimePermission "getenv.KEYFILE_LOCATION";
+//        permission java.io.FilePermission "/etc/-", "read";
 // };
