@@ -15,8 +15,10 @@ project(':app') {
         compile project(':dependency')
     }
     mainClassName = 'app.App'
+    installDist.destinationDir = file '/home/vagrant/app01'
 }
 
 project(':dependency') {
     apply plugin: 'java-library'
 }
+
