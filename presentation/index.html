@@ -37,39 +37,32 @@
                 <h3>Java version used</h3>
                 <pre><code>
 vagrant@contrib-stretch:~$ java -version
-java version "11.0.2" 2018-10-16 LTS
-Java(TM) SE Runtime Environment 18.9 (build 11.0.2+7-LTS)
-Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.2+7-LTS, mixed mode)
+openjdk version "11.0.2" 2019-01-15
+OpenJDK Runtime Environment (build 11.0.2+9-Debian-3bpo91)
+OpenJDK 64-Bit Server VM (build 11.0.2+9-Debian-3bpo91, mixed mode, sharing)
                 </code></pre>
             </section>
 
-            <section>
-                <h3>JAVA_HOME</h3>
+            <section style="top: 10vh;">
                 <pre><code>
-vagrant@contrib-stretch:~$ echo $JAVA_HOME 
-/usr/lib/jvm/java-11-oracle
-                </code></pre>
-            </section>
-
-            <section>
-                <pre><code>
-vagrant@contrib-stretch:~$ cd $JAVA_HOME/conf/security/
-vagrant@contrib-stretch:/usr/lib/jvm/java-11-oracle/conf/security$ tree
-.
-├── java.policy -> /etc/java-11-oracle/conf/security/java.policy
-├── java.security -> /etc/java-11-oracle/conf/security/java.security
-└── policy
-    ├── limited
-    │   ├── default_local.policy
-    │   ├── default_US_export.policy
-    │   └── exempt_local.policy
-    ├── README.txt
-    └── unlimited
-        ├── default_local.policy
-        └── default_US_export.policy
-
-3 directories, 8 files
-vagrant@contrib-stretch:/usr/lib/jvm/java-11-oracle/conf/security$ 
+vagrant@contrib-stretch:~$ cd /etc/java-11-openjdk/
+vagrant@contrib-stretch:/etc/java-11-openjdk$ tree security/
+security/
+├── blacklisted.certs
+├── default.policy
+├── java.policy
+├── java.security
+├── nss.cfg
+├── policy
+│   ├── limited
+│   │   ├── default_local.policy
+│   │   ├── default_US_export.policy
+│   │   └── exempt_local.policy
+│   ├── README.txt
+│   └── unlimited
+│       ├── default_local.policy
+│       └── default_US_export.policy
+└── public_suffix_list.dat
                 </code></pre>
             </section>
             <section>
