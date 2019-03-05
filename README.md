@@ -49,3 +49,36 @@ JAVA_OPTS='-Djava.security.manager' bin/app
 JAVA_OPTS='-Djava.security.manager -Djava.security.policy==my.policy' bin/app
 ```
 
+### JAR signing and veryfication 
+
+Generate a keypair 
+
+````bash
+keytool -genkeypair -alias isv -keystore keystore -storetype PKCS12
+````
+
+Generate certificate signing request 
+
+```bash
+keytool -certreq -alias isv -keystore keystore -file isv.csr
+```
+
+sign it in external tool, export and import into keystore (first import CA cert) 
+
+```bash
+keytool -importcert -alias ca -keystore keystore -file CA.crt
+keytool -importcert -alias isv -keystore keystore -file isv.crt
+```
+
+now 
+
+```bash
+cd ~/app01/lib
+jarsigner -keystore /vagrant/xca/keystore  dependency.jar isv
+```
+
+and we can veify the signature 
+
+```
+jarsigner -verify -keystore /vagrant/xca/keystore -storepass ****** -certs -verbose   dependency.jar isv
+```
