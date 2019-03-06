@@ -82,3 +82,10 @@ and we can veify the signature
 ```
 jarsigner -verify -keystore /vagrant/xca/keystore -storepass ****** -certs -verbose   dependency.jar isv
 ```
+
+running the app 
+
+```bash
+JAVA_OPTS='-Djava.security.manager -Djava.security.policy=my.signed.jars.policy' bin/app
+```
+make sure everyone notice single = sign
