@@ -1,0 +1,17 @@
+/* AUTOMATICALLY GENERATED ON Tue Mar 05 23:39:39 CET 2019*/
+/* DO NOT EDIT */
+
+keystore "file:/vagrant/xca/keystore", "pkcs12";
+
+keystorePasswordURL "file:/vagrant/xca/keystorepass";
+
+grant signedBy "isv",  codeBase "file:lib/dependency.jar" {
+  permission java.lang.RuntimePermission "getenv.KEYFILE_LOCATION";
+  permission java.io.FilePermission "/etc/os-release", "read";
+};
+
+grant signedBy "isv",  codeBase "file:lib/app.jar" {
+  permission java.lang.RuntimePermission "getenv.KEYFILE_LOCATION";
+  permission java.io.FilePermission "/etc/os-release", "read";
+};
+
