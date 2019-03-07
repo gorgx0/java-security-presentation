@@ -148,6 +148,7 @@
 <node TEXT="https://docs.oracle.com/javase/7/docs/technotes/guides/security/doprivileged.html" ID="ID_1158177386" CREATED="1551975897718" MODIFIED="1551975897718" LINK="https://docs.oracle.com/javase/7/docs/technotes/guides/security/doprivileged.html"/>
 <node TEXT="https://stackoverflow.com/questions/2233761/when-should-accesscontroller-doprivileged-be-used" ID="ID_431894527" CREATED="1551975906290" MODIFIED="1551975906290" LINK="https://stackoverflow.com/questions/2233761/when-should-accesscontroller-doprivileged-be-used"/>
 <node TEXT="https://www.programcreek.com/java-api-examples/?class=java.security.AccessController&amp;method=doPrivileged" ID="ID_1580176408" CREATED="1551975932825" MODIFIED="1551975932825" LINK="https://www.programcreek.com/java-api-examples/?class=java.security.AccessController&amp;method=doPrivileged"/>
+<node TEXT="https://www.cs.mun.ca/java-api-1.5/guide/security/spec/security-specTOC.fm.html" ID="ID_570350648" CREATED="1551992558813" MODIFIED="1551992558813" LINK="https://www.cs.mun.ca/java-api-1.5/guide/security/spec/security-specTOC.fm.html"/>
 </node>
 </node>
 </node>
