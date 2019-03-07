@@ -1,9 +1,9 @@
-<map version="freeplane 1.7.0">
+<map version="freeplane 1.6.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
 <node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1550953824106" STYLE="oval">
 <font SIZE="18"/>
 <hook NAME="MapStyle">
-    <properties edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff" fit_to_viewport="false"/>
+    <properties fit_to_viewport="false" edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff"/>
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24.0 pt">
@@ -99,7 +99,6 @@
     <pre http-equiv="content-type" content="text/html; charset=utf-8" style="font-family: Courier New, Monaco, Courier, monospace; color: rgb(68, 68, 68); font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; word-spacing: 0px">-Djava.security.debug=help</pre>
   </body>
 </html>
-
 </richcontent>
 </node>
 </node>
@@ -137,13 +136,19 @@
 <node TEXT="apache fortress" POSITION="left" ID="ID_1019358576" CREATED="1550339619430" MODIFIED="1550339633941" LINK="https://directory.apache.org/fortress/">
 <edge COLOR="#ff00ff"/>
 </node>
-<node TEXT="links" POSITION="left" ID="ID_1839861543" CREATED="1550953363573" MODIFIED="1550953824104" HGAP_QUANTITY="22.249999754130847 pt" VSHIFT_QUANTITY="79.49999763071544 pt">
+<node TEXT="links" POSITION="left" ID="ID_1839861543" CREATED="1550953363573" MODIFIED="1551975950913" HGAP_QUANTITY="22.249999754130847 pt" VSHIFT_QUANTITY="79.49999763071544 pt">
 <edge COLOR="#7c0000"/>
 <node TEXT="https://blog.frankel.ch/jvm-security/2/" ID="ID_1891855162" CREATED="1550953384471" MODIFIED="1550953384471" LINK="https://blog.frankel.ch/jvm-security/2/"/>
 <node TEXT="https://blog.frankel.ch/jvm-security/1/" ID="ID_8896570" CREATED="1550953416263" MODIFIED="1550953416263" LINK="https://blog.frankel.ch/jvm-security/1/"/>
 <node TEXT="https://blog.frankel.ch/java-security-manager/" ID="ID_1994842628" CREATED="1550953428794" MODIFIED="1550953428794" LINK="https://blog.frankel.ch/java-security-manager/"/>
 <node TEXT="https://blog.frankel.ch/jvm-security/3/" ID="ID_168755820" CREATED="1550953448813" MODIFIED="1550953448813" LINK="https://blog.frankel.ch/jvm-security/3/"/>
 <node TEXT="https://docs.oracle.com/javase/tutorial/security/index.html" ID="ID_800393398" CREATED="1550703617145" MODIFIED="1550953821910" LINK="https://docs.oracle.com/javase/tutorial/security/index.html" HGAP_QUANTITY="52.99999883770946 pt" VSHIFT_QUANTITY="46.49999861419205 pt"/>
+<node TEXT="accessController" ID="ID_1500282414" CREATED="1551975934720" MODIFIED="1551975950912" HGAP_QUANTITY="12.500000044703482 pt" VSHIFT_QUANTITY="32.99999901652339 pt">
+<node TEXT="https://docs.oracle.com/javase/8/docs/technotes/guides/security/doprivileged.html" ID="ID_164992682" CREATED="1551975886331" MODIFIED="1551975886331" LINK="https://docs.oracle.com/javase/8/docs/technotes/guides/security/doprivileged.html"/>
+<node TEXT="https://docs.oracle.com/javase/7/docs/technotes/guides/security/doprivileged.html" ID="ID_1158177386" CREATED="1551975897718" MODIFIED="1551975897718" LINK="https://docs.oracle.com/javase/7/docs/technotes/guides/security/doprivileged.html"/>
+<node TEXT="https://stackoverflow.com/questions/2233761/when-should-accesscontroller-doprivileged-be-used" ID="ID_431894527" CREATED="1551975906290" MODIFIED="1551975906290" LINK="https://stackoverflow.com/questions/2233761/when-should-accesscontroller-doprivileged-be-used"/>
+<node TEXT="https://www.programcreek.com/java-api-examples/?class=java.security.AccessController&amp;method=doPrivileged" ID="ID_1580176408" CREATED="1551975932825" MODIFIED="1551975932825" LINK="https://www.programcreek.com/java-api-examples/?class=java.security.AccessController&amp;method=doPrivileged"/>
+</node>
 </node>
 </node>
 </map>
