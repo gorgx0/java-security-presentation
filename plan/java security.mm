@@ -1,4 +1,4 @@
-<map version="freeplane 1.6.0">
+<map version="freeplane 1.7.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
 <node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1550953824106" STYLE="oval">
 <font SIZE="18"/>
@@ -149,6 +149,7 @@
 <node TEXT="https://stackoverflow.com/questions/2233761/when-should-accesscontroller-doprivileged-be-used" ID="ID_431894527" CREATED="1551975906290" MODIFIED="1551975906290" LINK="https://stackoverflow.com/questions/2233761/when-should-accesscontroller-doprivileged-be-used"/>
 <node TEXT="https://www.programcreek.com/java-api-examples/?class=java.security.AccessController&amp;method=doPrivileged" ID="ID_1580176408" CREATED="1551975932825" MODIFIED="1551975932825" LINK="https://www.programcreek.com/java-api-examples/?class=java.security.AccessController&amp;method=doPrivileged"/>
 <node TEXT="https://www.cs.mun.ca/java-api-1.5/guide/security/spec/security-specTOC.fm.html" ID="ID_570350648" CREATED="1551992558813" MODIFIED="1551992558813" LINK="https://www.cs.mun.ca/java-api-1.5/guide/security/spec/security-specTOC.fm.html"/>
+<node TEXT="https://docs.oracle.com/en/java/javase/11/security/java-security-overview1.html" ID="ID_1240629485" CREATED="1551998120640" MODIFIED="1551998120640" LINK="https://docs.oracle.com/en/java/javase/11/security/java-security-overview1.html"/>
 </node>
 </node>
 </node>
