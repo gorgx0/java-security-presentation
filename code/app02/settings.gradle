@@ -1,0 +1,4 @@
+rootProject.name = 'app02'
+
+include 'main'
+include 'dependency'
