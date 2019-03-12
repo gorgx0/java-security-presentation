@@ -3,17 +3,24 @@
  */
 package main;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.ClassPath;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.*;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,52 +31,38 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public class App {
     private static final String CODE_PROPERTIES = "CODE_PROP_FILE" ;
     private static final String CODE_JARS_PROPERTY = "codeFolder" ;
+    private static final int THREAD_POOL_SIZE = 10;
 
+    private final static ClassLoader MAIN_CL = App.class.getClassLoader();
+    private final static ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
     public String getGreeting() {
         return "Hello world.";
     }
 
-    public static void main(String[] args) throws IOException, MalformedURLException, InterruptedException {
+    public static void main(String[] args) throws IOException, MalformedURLException, InterruptedException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         String codeJarsLocation = getJarsPath();
 
         List<URL> foundJarFiles = getJars(codeJarsLocation);
 
-
-        WatchService watchService = FileSystems.getDefault().newWatchService();
-        WatchKey watchKey = Paths.get(codeJarsLocation).register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-
-        List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
-
-        for (WatchEvent<?> watchEvent : watchEvents) {
-            System.out.println(watchEvent);
+        for (URL foundJarFile : foundJarFiles) {
+            processJar(foundJarFile);
         }
+    }
 
-        while (true){
-            WatchKey key = watchService.poll(5, TimeUnit.MINUTES);
-            System.out.println(key.isValid());
-            List<WatchEvent<?>> watchEvents1 = key.pollEvents();
-            for (WatchEvent<?> watchEvent : watchEvents1) {
-                Object context = watchEvent.context();
-                System.out.println(context);
+    private static void processJar(URL foundJarFile) throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        ClassLoader cl = new URLClassLoader(new URL[]{foundJarFile}, MAIN_CL);
+        ImmutableSet<ClassPath.ClassInfo> classes = ClassPath.from(cl).getAllClasses();
+
+        for (ClassPath.ClassInfo classInfo : classes) {
+            Class<?> aClass = classInfo.load();
+            if(aClass.isAssignableFrom(Runnable.class)) {
+                Constructor<?> constructor = aClass.getConstructor(null);
+                Object instance = constructor.newInstance();
+                executor.submit((Runnable) instance);
             }
-            key.reset();
         }
 
-
-//        ClassLoader parent = App.class.getClassLoader();
-//        Set<URL> jarUrls = Arrays.stream(foundJarFiles).map(File::toURI).map(uri -> {
-//            try {
-//                return uri.toURL();
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }).collect(Collectors.toSet());
-
-
-//        URLClassLoader urlClassLoader = new URLClassLoader();
-//        System.out.println(new App().getGreeting());
     }
 
     private static List<URL> getJars(String codeJarsLocation) {

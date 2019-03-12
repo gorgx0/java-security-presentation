@@ -3,8 +3,18 @@
  */
 package dependency;
 
-public class Library {
+
+public class Library implements Runnable{
     public boolean someLibraryMethod() {
         return true;
+    }
+
+    public static void info(){
+        System.out.println("This is a library file");
+    }
+
+    @Override
+    public void run() {
+        info();
     }
 }
