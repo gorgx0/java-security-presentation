@@ -5,11 +5,8 @@ package dependency;
 
 
 public class Library implements Runnable{
-    public boolean someLibraryMethod() {
-        return true;
-    }
 
-    public static void info(){
+    private void info(){
         System.out.println("This is a library file");
     }
 

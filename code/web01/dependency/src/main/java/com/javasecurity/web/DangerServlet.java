@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 public class DangerServlet extends HttpServlet {
 
     @Override
-    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+    public void service(ServletRequest req, ServletResponse res) throws IOException {
         res.setContentType("text/plain");
         PrintWriter writer = res.getWriter();
         SensitiveOperation sensitiveOperation = new SensitiveOperation();

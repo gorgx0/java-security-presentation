@@ -3,22 +3,28 @@
  */
 package main;
 
-import com.google.common.reflect.ClassPath;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.*;
-import java.util.*;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
+
+import static java.nio.file.StandardWatchEventKinds.*;
 
 @Slf4j
 public class App {
@@ -29,65 +35,82 @@ public class App {
     private final static ClassLoader MAIN_CL = App.class.getClassLoader();
     private final static ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
-    public static void main(String[] args) throws IOException, MalformedURLException, InterruptedException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        String codeJarsLocation = getJarsPath();
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        Path codeJarsLocation = getJarsPath();
 
         File[] foundJarFiles = getJars(codeJarsLocation);
 
-        Set<String> foundClasses;
         for (File foundJarFile : foundJarFiles) {
-            JarFile jarFile = new JarFile(foundJarFile);
-            foundClasses = jarFile.stream()
-                    .map(JarEntry::getRealName)
-                    .filter(className -> className.endsWith(".class"))
-                    .map(className -> className.replace("/","."))
-                    .map(className -> className.substring(0,className.length()-6))
-                    .collect(Collectors.toSet());
-            ClassLoader cl = new URLClassLoader(new URL[]{foundJarFile.toURI().toURL()}, MAIN_CL);
-            for (String foundClass : foundClasses) {
-                Class<?> aClass = cl.loadClass(foundClass);
-                if (Runnable.class.isAssignableFrom(aClass)) {
-                    Constructor<?> constructor = aClass.getConstructor();
-                    Runnable task = (Runnable) constructor.newInstance();
-                    executor.submit(task);
-                }
-            }
+            LOGGER.info("Processing intially found jar: {}",foundJarFile.getName());
+            processJarFile(foundJarFile);
         }
 
-    }
-
-
-    private static File[] getJars(String codeJarsLocation) {
-        return Paths.get(codeJarsLocation).toFile().listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".jar");
+        WatchService watchService = FileSystems.getDefault().newWatchService();
+        WatchKey watchKey = codeJarsLocation.register(watchService, ENTRY_CREATE, ENTRY_MODIFY);
+        watchKey.reset();
+        while (true) {
+            List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
+            for (WatchEvent<?> watchEvent : watchEvents) {
+                WatchEvent.Kind<?> kind = watchEvent.kind();
+                if(kind==OVERFLOW) {
+                    LOGGER.warn("OVERFLOW type of event");
+                    continue;
+                }
+                WatchEvent<Path> pathEvent = (WatchEvent<Path>) watchEvent;
+                Path filePath = codeJarsLocation.resolve(pathEvent.context());
+                LOGGER.info("Path event for file: {}", filePath);
+                if (filePath.toFile().getName().endsWith(".jar")) {
+                    processJarFile(filePath.toFile());
+                }
             }
-        });
+            if(!watchKey.reset())
+                LOGGER.error("Watch key is no longer valid");
+        }
     }
 
-    private static String getJarsPath() throws IOException {
+    private static void processJarFile(File foundJarFile) throws IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        LOGGER.info("Processing jar file: {}", foundJarFile.getName());
+        Set<String> foundClasses;
+        JarFile jarFile = new JarFile(foundJarFile);
+        foundClasses = getJarClasses(jarFile);
+        ClassLoader cl = new URLClassLoader(new URL[]{foundJarFile.toURI().toURL()}, MAIN_CL);
+        for (String foundClass : foundClasses) {
+            LOGGER.debug("Checking class: {}",foundClass);
+            Class<?> aClass = cl.loadClass(foundClass);
+            if (Runnable.class.isAssignableFrom(aClass)) {
+                LOGGER.debug("Running the runnable class {}",foundClass);
+                Constructor<?> constructor = aClass.getConstructor();
+                Runnable task = (Runnable) constructor.newInstance();
+                executor.submit(task);
+            }
+        }
+    }
+
+    private static Set<String> getJarClasses(JarFile jarFile) {
+        Set<String> foundClasses;
+        foundClasses = jarFile.stream()
+                .map(JarEntry::getRealName)
+                .filter(className -> className.endsWith(".class"))
+                .map(className -> className.replace("/","."))
+                .map(className -> className.substring(0,className.length()-6))
+                .collect(Collectors.toSet());
+        return foundClasses;
+    }
+
+
+    private static File[] getJars(Path codeJarsLocation) {
+        return codeJarsLocation.toFile().listFiles((dir, name) -> name.endsWith(".jar"));
+    }
+
+    private static Path getJarsPath() throws IOException {
         String propertiesFileLocation =
                 System.getProperty(CODE_PROPERTIES, "code.properties");
         Properties properties = new Properties();
-        InputStream propertiesAsInputStream = App.class.getClassLoader().getResourceAsStream(propertiesFileLocation);
+        @NonNull InputStream propertiesAsInputStream = App.class.getClassLoader().getResourceAsStream(propertiesFileLocation);
         properties.load(propertiesAsInputStream);
 
-        return properties.getProperty(CODE_JARS_PROPERTY);
+        return Paths.get(properties.getProperty(CODE_JARS_PROPERTY));
     }
 
-
-    private static Optional<URL> fileToUrl(File file) {
-        Optional<URL> ret = Optional.empty();
-        try {
-            ret = Optional.of(file.toURI().toURL());
-        } catch (MalformedURLException e) {
-            LOGGER.error("Error converting file: ",file.getName(),e);
-        }
-        return ret;
-    }
 }
