@@ -3,29 +3,22 @@
  */
 package main;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.nio.file.StandardWatchEventKinds.*;
 
 @Slf4j
 public class App {
@@ -43,35 +36,38 @@ public class App {
     public static void main(String[] args) throws IOException, MalformedURLException, InterruptedException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         String codeJarsLocation = getJarsPath();
 
-        List<URL> foundJarFiles = getJars(codeJarsLocation);
+        File[] foundJarFiles = getJars(codeJarsLocation);
 
-        for (URL foundJarFile : foundJarFiles) {
-            processJar(foundJarFile);
-        }
-    }
-
-    private static void processJar(URL foundJarFile) throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        ClassLoader cl = new URLClassLoader(new URL[]{foundJarFile}, MAIN_CL);
-        ImmutableSet<ClassPath.ClassInfo> classes = ClassPath.from(cl).getAllClasses();
-
-        for (ClassPath.ClassInfo classInfo : classes) {
-            Class<?> aClass = classInfo.load();
-            if(aClass.isAssignableFrom(Runnable.class)) {
-                Constructor<?> constructor = aClass.getConstructor(null);
-                Object instance = constructor.newInstance();
-                executor.submit((Runnable) instance);
+        Set<String> foundClasses;
+        for (File foundJarFile : foundJarFiles) {
+            JarFile jarFile = new JarFile(foundJarFile);
+            foundClasses = jarFile.stream()
+                    .map(JarEntry::getRealName)
+                    .filter(className -> className.endsWith(".class"))
+                    .map(className -> className.replace("/","."))
+                    .map(className -> className.substring(0,className.length()-6))
+                    .collect(Collectors.toSet());
+            ClassLoader cl = new URLClassLoader(new URL[]{foundJarFile.toURI().toURL()}, MAIN_CL);
+            for (String foundClass : foundClasses) {
+                Class<?> aClass = cl.loadClass(foundClass);
+                if (Runnable.class.isAssignableFrom(aClass)) {
+                    Constructor<?> constructor = aClass.getConstructor();
+                    Runnable task = (Runnable) constructor.newInstance();
+                    executor.submit(task);
+                }
             }
         }
 
     }
 
-    private static List<URL> getJars(String codeJarsLocation) {
-        return Arrays.stream(Paths.get(codeJarsLocation).toFile().listFiles(new FilenameFilter() {
+
+    private static File[] getJars(String codeJarsLocation) {
+        return Paths.get(codeJarsLocation).toFile().listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
                 return name.endsWith(".jar");
             }
-        })).map(App::fileToUrl).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
+        });
     }
 
     private static String getJarsPath() throws IOException {
