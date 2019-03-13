@@ -78,7 +78,7 @@ public class App {
                     LOGGER.debug("Running the runnable class {}",foundClass);
                     Constructor<?> constructor = aClass.getConstructor();
                     Runnable task = (Runnable) constructor.newInstance();
-                    executor.submit(task);
+                    executor.execute(task);
                 }
             }
         } catch (Exception e) {
