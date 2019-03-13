@@ -42,6 +42,7 @@ public class App {
         watchKey.reset();
         while (true) {
             List<WatchEvent<?>> watchEvents = watchKey.pollEvents();
+            Path lastEventPath = null;
             for (WatchEvent<?> watchEvent : watchEvents) {
                 WatchEvent.Kind<?> kind = watchEvent.kind();
                 if(kind==OVERFLOW) {
@@ -51,9 +52,12 @@ public class App {
                 WatchEvent<Path> pathEvent = (WatchEvent<Path>) watchEvent;
                 Path filePath = codeJarsLocation.resolve(pathEvent.context());
                 LOGGER.info("Path event for file: {}", filePath);
-                if (filePath.toFile().getName().endsWith(".jar")) {
-                    processJarFile(filePath.toFile());
+                if(!filePath.equals(lastEventPath)){
+                    if (filePath.toFile().getName().endsWith(".jar")) {
+                        processJarFile(filePath.toFile());
+                    }
                 }
+                lastEventPath = filePath;
             }
             if(!watchKey.reset())
                 LOGGER.error("Watch key is no longer valid");
@@ -63,18 +67,22 @@ public class App {
     private static void processJarFile(File foundJarFile) throws IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         LOGGER.info("Processing jar file: {}", foundJarFile.getName());
         Set<String> foundClasses;
-        JarFile jarFile = new JarFile(foundJarFile);
-        foundClasses = getJarClasses(jarFile);
-        ClassLoader cl = new URLClassLoader(new URL[]{foundJarFile.toURI().toURL()}, MAIN_CL);
-        for (String foundClass : foundClasses) {
-            LOGGER.debug("Checking class: {}",foundClass);
-            Class<?> aClass = cl.loadClass(foundClass);
-            if (Runnable.class.isAssignableFrom(aClass)) {
-                LOGGER.debug("Running the runnable class {}",foundClass);
-                Constructor<?> constructor = aClass.getConstructor();
-                Runnable task = (Runnable) constructor.newInstance();
-                executor.submit(task);
+        try {
+            JarFile jarFile = new JarFile(foundJarFile);
+            foundClasses = getJarClasses(jarFile);
+            ClassLoader cl = new URLClassLoader(new URL[]{foundJarFile.toURI().toURL()}, MAIN_CL);
+            for (String foundClass : foundClasses) {
+                LOGGER.debug("Checking class: {}",foundClass);
+                Class<?> aClass = cl.loadClass(foundClass);
+                if (Runnable.class.isAssignableFrom(aClass)) {
+                    LOGGER.debug("Running the runnable class {}",foundClass);
+                    Constructor<?> constructor = aClass.getConstructor();
+                    Runnable task = (Runnable) constructor.newInstance();
+                    executor.submit(task);
+                }
             }
+        } catch (Exception e) {
+            LOGGER.error("Error processing {}",foundJarFile.getName(),e);
         }
     }
 
@@ -98,14 +106,22 @@ public class App {
         String propertiesFileLocation =
                 System.getProperty(CODE_PROPERTIES, "code.properties");
         Properties properties = new Properties();
+        LOGGER.info("Processing properties file: {}",propertiesFileLocation);
         @NonNull InputStream propertiesAsInputStream = App.class.getClassLoader().getResourceAsStream(propertiesFileLocation);
         properties.load(propertiesAsInputStream);
 
-        return Paths.get(properties.getProperty(CODE_JARS_PROPERTY));
+        String codeJarsLocation = properties.getProperty(CODE_JARS_PROPERTY);
+        LOGGER.info("codeJarsLocation: {}", codeJarsLocation);
+        return Paths.get(codeJarsLocation);
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Path codeJarsLocation = getJarsPath();
+
+        if(!codeJarsLocation.toFile().exists()){
+            LOGGER.error("Code jars location {} does not exists",codeJarsLocation);
+            System.exit(1);
+        }
 
         File[] foundJarFiles = getJars(codeJarsLocation);
 
