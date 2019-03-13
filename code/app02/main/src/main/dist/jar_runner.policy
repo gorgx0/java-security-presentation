@@ -1,0 +1,10 @@
+/* AUTOMATICALLY GENERATED ON Wed Mar 13 22:44:57 CET 2019*/
+/* DO NOT EDIT */
+
+grant codeBase "file:lib/*" {
+  permission java.util.PropertyPermission "CODE_PROP_FILE", "read";
+  permission java.io.FilePermission "<<ALL FILES>>", "read";
+  permission java.lang.RuntimePermission "createClassLoader";
+  permission java.lang.RuntimePermission "accessClassInPackage.sun.reflect";
+};
+
