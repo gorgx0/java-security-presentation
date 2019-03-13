@@ -36,16 +36,7 @@ public class App {
     private final static ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        Path codeJarsLocation = getJarsPath();
-
-        File[] foundJarFiles = getJars(codeJarsLocation);
-
-        for (File foundJarFile : foundJarFiles) {
-            LOGGER.info("Processing intially found jar: {}",foundJarFile.getName());
-            processJarFile(foundJarFile);
-        }
-
+    private static void startWatchingAndProcessing(Path codeJarsLocation) throws IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         WatchService watchService = FileSystems.getDefault().newWatchService();
         WatchKey watchKey = codeJarsLocation.register(watchService, ENTRY_CREATE, ENTRY_MODIFY);
         watchKey.reset();
@@ -111,6 +102,19 @@ public class App {
         properties.load(propertiesAsInputStream);
 
         return Paths.get(properties.getProperty(CODE_JARS_PROPERTY));
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        Path codeJarsLocation = getJarsPath();
+
+        File[] foundJarFiles = getJars(codeJarsLocation);
+
+        for (File foundJarFile : foundJarFiles) {
+            LOGGER.info("Processing intially found jar: {}",foundJarFile.getName());
+            processJarFile(foundJarFile);
+        }
+
+        startWatchingAndProcessing(codeJarsLocation);
     }
 
 }
