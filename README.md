@@ -89,3 +89,11 @@ running the app
 JAVA_OPTS='-Djava.security.manager -Djava.security.policy=my.signed.jars.policy' bin/app
 ```
 make sure everyone notice single = sign
+
+### app02
+
+```
+cd ~/app02
+export JAVA_OPTS='-Djava.security.manager -Djava.security.policy=jar_runner.policy  -Djava.security.debug=access:failure'
+bin/main
+```

@@ -1,12 +1,16 @@
 package dependency;
 
-public class DangerousTask implements Runnable {
+import java.security.PrivilegedAction;
+import java.security.PrivilegedExceptionAction;
+
+public class DangerousTask implements PrivilegedExceptionAction {
 
 
     @Override
-    public void run() {
+    public Object run() {
         String secret_key_location = System.getProperty("SECRET_KEY_LOCATION");
-
         System.out.println("Secret key location: " + secret_key_location);
+        return null;
     }
+
 }

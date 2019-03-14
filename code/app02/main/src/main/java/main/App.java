@@ -15,9 +15,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.*;
+import java.security.PrivilegedAction;
+import java.security.PrivilegedExceptionAction;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.jar.JarEntry;
@@ -78,7 +81,13 @@ public class App {
                     LOGGER.debug("Running the runnable class {}",foundClass);
                     Constructor<?> constructor = aClass.getConstructor();
                     Runnable task = (Runnable) constructor.newInstance();
-                    executor.execute(task);
+                    executor.submit(task);
+                }else if(PrivilegedExceptionAction.class.isAssignableFrom(aClass)){
+                    LOGGER.debug("Running a priviledged action from class {}",aClass);
+                    Constructor<?> constructor = aClass.getConstructor();
+                    PrivilegedExceptionAction task = (PrivilegedExceptionAction) constructor.newInstance();
+                    Callable<Object> callable = Executors.callable(task);
+                    executor.submit(callable);
                 }
             }
         } catch (Exception e) {
@@ -116,6 +125,7 @@ public class App {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
         Path codeJarsLocation = getJarsPath();
 
         if(!codeJarsLocation.toFile().exists()){
