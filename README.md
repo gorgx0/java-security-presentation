@@ -97,3 +97,9 @@ cd ~/app02
 export JAVA_OPTS='-Djava.security.manager -Djava.security.policy=jar_runner.policy  -Djava.security.debug=access:failure'
 bin/main
 ```
+
+adding login config
+```
+export JAVA_OPTS='-Djava.security.manager -Djava.security.policy=jar_runner.policy -Djava.security.debug=access:failure -Djava.security.auth.login.config=login.config'
+```
+

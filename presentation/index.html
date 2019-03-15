@@ -87,7 +87,12 @@ security/
             </section>
 
             <section>
+                <p>
                     -Djava.security.debug=<span class="fragment fade">all</span>
+                </p>
+                <p>
+                    <span class="fragment fade">-Djava.security.debug=access:failure</span>
+                </p>
             </section>
 
             <section>
@@ -114,7 +119,30 @@ security/
                 <div class="fragment fade-right">POLICYTOOL</div>
             </section>
 
+            <section>
+                And now an inteteresting part
+            </section>
 
+            <section>
+                -Djava.security.auth.login.config
+            </section>
+
+            <section>
+                <pre>
+                    <code>
+Login1 {
+   sample.SampleLoginModule required debug=true;
+};
+
+Login2 {
+   sample.SampleLoginModule required;
+   com.sun.security.auth.module.NTLoginModule sufficient;
+   com.foo.SmartCard requisite debug=true;
+   com.foo.Kerberos optional debug=true;
+};
+                    </code>
+                </pre>
+            </section>
         </div>
     </div>
     trdt
