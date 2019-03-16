@@ -100,6 +100,5 @@ bin/main
 
 adding login config
 ```
-export JAVA_OPTS='-Djava.security.manager -Djava.security.policy=jar_runner.policy -Djava.security.debug=access:failure -Djava.security.auth.login.config=login.config'
+export JAVA_OPTS='-Djava.security.manager -Djava.security.policy=jar_runner.policy -Djava.security.debug=access:failure,configfile,configparser,logincontext -Djava.security.auth.login.config=file:login.config'
 ```
-
