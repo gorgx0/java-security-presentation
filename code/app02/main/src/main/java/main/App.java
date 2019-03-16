@@ -3,11 +3,14 @@
  */
 package main;
 
+import login.HardCodedCredentialsCallbackHandler;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -15,7 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.*;
-import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
 import java.util.List;
 import java.util.Properties;
@@ -124,7 +126,12 @@ public class App {
         return Paths.get(codeJarsLocation);
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, LoginException {
+
+        CallbackHandler callbackHandler = new HardCodedCredentialsCallbackHandler();
+
+        LoginContext loginContext = new LoginContext("Keycloack",callbackHandler);
+        loginContext.login();
 
         Path codeJarsLocation = getJarsPath();
 
