@@ -2,5 +2,4 @@ rootProject.name = 'app02'
 
 include 'main'
 include 'dependency'
-include 'login-module'
 

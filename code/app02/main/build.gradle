@@ -24,8 +24,14 @@ dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     compile 'com.google.guava:guava:27.1-jre'
     compile group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
-    compile group: 'ch.qos.logback', name:'logback-classic', version: '1.0.9'
-    compile group: 'ch.qos.logback', name:'logback-core', version: '1.0.9'
+    compile group: 'ch.qos.logback', name:'logback-classic', version: '1.2.3'
+    compile group: 'ch.qos.logback', name:'logback-core', version: '1.2.3'
+    compile 'org.keycloak:keycloak-adapter-core:5.0.0'
+    compile 'org.keycloak:keycloak-core:5.0.0'
+    compile 'org.jboss.logging:jboss-logging:3.3.2.Final'
+    compile 'org.apache.httpcomponents:httpclient:4.5.7'
+    compile('org.jboss.slf4j:slf4j-jboss-logging:1.1.0.Final')
+
     compileOnly 'org.projectlombok:lombok:1.18.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
 }
