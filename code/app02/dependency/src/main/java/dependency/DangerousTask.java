@@ -1,8 +1,13 @@
 package dependency;
 
+import lombok.extern.slf4j.Slf4j;
+
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
 
+@Slf4j
 public class DangerousTask implements PrivilegedExceptionAction {
 
 
