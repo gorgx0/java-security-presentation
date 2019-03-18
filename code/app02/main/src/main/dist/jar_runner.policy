@@ -22,5 +22,10 @@ grant {
   // required by JAAS
   permission javax.security.auth.AuthPermission "modifyPrincipals";
   permission javax.security.auth.AuthPermission "modifyPrivateCredentials";
+  permission javax.security.auth.AuthPermission "doAs" ;
+};
+
+grant principal org.keycloak.adapters.jaas.RolePrincipal "uma_authorization" {
+    permission java.security.AllPermission;
 };
 
