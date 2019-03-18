@@ -150,6 +150,19 @@
 <node TEXT="https://www.programcreek.com/java-api-examples/?class=java.security.AccessController&amp;method=doPrivileged" ID="ID_1580176408" CREATED="1551975932825" MODIFIED="1551975932825" LINK="https://www.programcreek.com/java-api-examples/?class=java.security.AccessController&amp;method=doPrivileged"/>
 <node TEXT="https://www.cs.mun.ca/java-api-1.5/guide/security/spec/security-specTOC.fm.html" ID="ID_570350648" CREATED="1551992558813" MODIFIED="1551992558813" LINK="https://www.cs.mun.ca/java-api-1.5/guide/security/spec/security-specTOC.fm.html"/>
 <node TEXT="https://docs.oracle.com/en/java/javase/11/security/java-security-overview1.html" ID="ID_1240629485" CREATED="1551998120640" MODIFIED="1551998120640" LINK="https://docs.oracle.com/en/java/javase/11/security/java-security-overview1.html"/>
+<node ID="ID_785147034" CREATED="1552865466406" MODIFIED="1552865466406" LINK="https://web.fhnw.ch/plattformen/as/vorlesungsunterlagen-1/copy_of_java-security/an-introductory-java-security-example"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <a http-equiv="content-type" content="text/html; charset=utf-8" href="https://web.fhnw.ch/plattformen/as/vorlesungsunterlagen-1/copy_of_java-security/an-introductory-java-security-example">https://web.fhnw.ch/plattformen/as/vorlesungsunterlagen-1/copy_of_java-security/an-introductory-java-security-example</a> 
+  </body>
+</html>
+
+</richcontent>
+</node>
 </node>
 </node>
 </node>
