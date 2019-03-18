@@ -7,6 +7,7 @@ import login.HardCodedCredentialsCallbackHandler;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
@@ -18,6 +19,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.*;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
 import java.util.List;
 import java.util.Properties;
@@ -130,8 +133,10 @@ public class App {
 
         CallbackHandler callbackHandler = new HardCodedCredentialsCallbackHandler();
 
-        LoginContext loginContext = new LoginContext("Keycloack",callbackHandler);
+        LoginContext loginContext = new LoginContext("Keycloak",callbackHandler);
         loginContext.login();
+        Subject subject = loginContext.getSubject();
+
 
         Path codeJarsLocation = getJarsPath();
 
@@ -139,12 +144,23 @@ public class App {
             LOGGER.error("Code jars location {} does not exists",codeJarsLocation);
             System.exit(1);
         }
-
         File[] foundJarFiles = getJars(codeJarsLocation);
 
         for (File foundJarFile : foundJarFiles) {
             LOGGER.info("Processing intially found jar: {}",foundJarFile.getName());
-            processJarFile(foundJarFile);
+            Subject.doAs(subject, new PrivilegedAction() {
+                @Override
+                public Object run() {
+                    try {
+                        processJarFile(foundJarFile);
+                    } catch (IOException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e ) {
+                        LOGGER.error("processing jar issue", e);
+                    }
+                    return null;
+                }
+            });
+
+
         }
 
         startWatchingAndProcessing(codeJarsLocation);
