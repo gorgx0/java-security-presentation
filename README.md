@@ -102,3 +102,9 @@ adding login config
 ```
 export JAVA_OPTS='-Djava.security.manager -Djava.security.policy=jar_runner.policy -Djava.security.debug=access:failure,configfile,configparser,logincontext -Djava.security.auth.login.config=file:login.config'
 ```
+
+start keycloack in docker
+
+```bash
+docker run -p 8888:8080  -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=password11 jboss/keycloak
+```
