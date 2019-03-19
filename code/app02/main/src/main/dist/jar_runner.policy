@@ -1,4 +1,4 @@
-/* AUTOMATICALLY GENERATED ON Wed Mar 13 22:44:57 CET 2019*/
+/* AUTOMATICALLY GENERATED ON Mon Mar 18 22:23:31 CET 2019*/
 /* DO NOT EDIT */
 
 grant {
@@ -19,13 +19,16 @@ grant {
   permission java.lang.reflect.ReflectPermission "suppressAccessChecks" ;
   permission java.lang.RuntimePermission "accessDeclaredMembers";
   permission java.net.SocketPermission "127.0.0.1:8888", "connect,resolve";
+  permission java.net.SocketPermission "10.0.2.2:8888", "connect,resolve";
   // required by JAAS
   permission javax.security.auth.AuthPermission "modifyPrincipals";
   permission javax.security.auth.AuthPermission "modifyPrivateCredentials";
-  permission javax.security.auth.AuthPermission "doAs" ;
+  permission javax.security.auth.AuthPermission "doAsPrivileged" ;
+  permission javax.security.auth.AuthPermission "getSubject";
+  permission javax.security.auth.AuthPermission "doAs";
 };
 
-grant principal org.keycloak.adapters.jaas.RolePrincipal "uma_authorization" {
-    permission java.security.AllPermission;
+grant      principal org.keycloak.adapters.jaas.RolePrincipal "uma_authorization" {
+  permission java.util.PropertyPermission "SECRET_KEY_LOCATION", "read";
 };
 

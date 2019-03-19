@@ -108,3 +108,11 @@ start keycloack in docker
 ```bash
 docker run -p 8888:8080  -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=password11 jboss/keycloak
 ```
+
+
+
+
+### DEBUG
+```
+-Xdebug -Xrunjdwp:transport=dt_socket,address=7777,server=y,suspend=y
+```

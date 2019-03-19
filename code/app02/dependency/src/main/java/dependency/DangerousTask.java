@@ -13,8 +13,12 @@ public class DangerousTask implements PrivilegedExceptionAction {
 
     @Override
     public Object run() {
-        String secret_key_location = System.getProperty("SECRET_KEY_LOCATION");
-        System.out.println("Secret key location: " + secret_key_location);
+        try {
+            String secret_key_location = System.getProperty("SECRET_KEY_LOCATION");
+            System.out.println("Secret key location: " + secret_key_location);
+        }catch (Exception e) {
+            LOGGER.error("Task execution error",e);
+        }
         return null;
     }
 
