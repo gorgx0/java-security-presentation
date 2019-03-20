@@ -1,6 +1,6 @@
 <map version="freeplane 1.7.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
-<node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1550953824106" STYLE="oval">
+<node TEXT="java security" FOLDED="false" ID="ID_660232944" CREATED="1550098237729" MODIFIED="1553119413280" STYLE="oval">
 <font SIZE="18"/>
 <hook NAME="MapStyle">
     <properties fit_to_viewport="false" edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff"/>
@@ -70,6 +70,7 @@
 <node TEXT="limited vs. unlimited cryptography" ID="ID_930921963" CREATED="1550098751036" MODIFIED="1550098766113"/>
 <node TEXT="crypto providers" ID="ID_332459314" CREATED="1551313508561" MODIFIED="1551313514385">
 <node TEXT="https://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html" ID="ID_55873732" CREATED="1551313515719" MODIFIED="1551313515719" LINK="https://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html"/>
+<node TEXT="https://docs.oracle.com/en/java/javase/11/security/oracle-providers.html" ID="ID_1879455051" CREATED="1553119530268" MODIFIED="1553119537581" LINK="https://docs.oracle.com/en/java/javase/11/security/oracle-providers.html"/>
 </node>
 <node TEXT="enough on crypto as such so far" ID="ID_1049094376" CREATED="1550099585611" MODIFIED="1550099594858"/>
 </node>
@@ -77,6 +78,19 @@
 <edge COLOR="#00ff00"/>
 <node TEXT="add   -Djava.security.manager" ID="ID_1510986854" CREATED="1550102296473" MODIFIED="1550102505510">
 <node TEXT="https://docs.oracle.com/javase/7/docs/technotes/guides/security/troubleshooting-security.html" ID="ID_396886654" CREATED="1551121059826" MODIFIED="1551121059826" LINK="https://docs.oracle.com/javase/7/docs/technotes/guides/security/troubleshooting-security.html"/>
+<node ID="ID_459145939" CREATED="1553119727818" MODIFIED="1553119727818" LINK="https://docs.oracle.com/en/java/javase/11/security/troubleshooting-security.html"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <a http-equiv="content-type" content="text/html; charset=utf-8" href="https://docs.oracle.com/en/java/javase/11/security/troubleshooting-security.html">https://docs.oracle.com/en/java/javase/11/security/troubleshooting-security.html</a> 
+  </body>
+</html>
+
+</richcontent>
+</node>
 </node>
 <node TEXT="overriding default policy" ID="ID_2458051" CREATED="1550102532400" MODIFIED="1550102543962"/>
 <node TEXT="default forbid all - pick allowed" ID="ID_1114406130" CREATED="1550102545455" MODIFIED="1550102594430"/>
@@ -121,7 +135,7 @@
 <edge COLOR="#7c007c"/>
 <node TEXT="jsboss/wildfly" ID="ID_1223458764" CREATED="1551221956422" MODIFIED="1551221963981"/>
 </node>
-<node TEXT="using keycloack login modue" POSITION="right" ID="ID_464581766" CREATED="1550235491964" MODIFIED="1550235604151" HGAP_QUANTITY="15.499999955296518 pt" VSHIFT_QUANTITY="23.249999307096026 pt">
+<node TEXT="using keycloack login modue" POSITION="right" ID="ID_464581766" CREATED="1550235491964" MODIFIED="1553119413278" HGAP_QUANTITY="5.750000245869153 pt" VSHIFT_QUANTITY="60.74999818950897 pt">
 <edge COLOR="#00ff00"/>
 </node>
 <node TEXT="SecureClassLoader" POSITION="left" ID="ID_1384795580" CREATED="1550101406439" MODIFIED="1550171090066" HGAP_QUANTITY="12.500000044703482 pt" VSHIFT_QUANTITY="-14.999999552965178 pt">
@@ -160,7 +174,6 @@
     <a http-equiv="content-type" content="text/html; charset=utf-8" href="https://web.fhnw.ch/plattformen/as/vorlesungsunterlagen-1/copy_of_java-security/an-introductory-java-security-example">https://web.fhnw.ch/plattformen/as/vorlesungsunterlagen-1/copy_of_java-security/an-introductory-java-security-example</a> 
   </body>
 </html>
-
 </richcontent>
 </node>
 </node>
