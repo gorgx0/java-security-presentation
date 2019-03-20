@@ -24,6 +24,7 @@ import java.security.*;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
@@ -34,13 +35,13 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public class App {
     private static final String CODE_PROPERTIES = "CODE_PROP_FILE" ;
     private static final String CODE_JARS_PROPERTY = "codeFolder" ;
-//    private static final int THREAD_POOL_SIZE = 10;
+    private static final int THREAD_POOL_SIZE = 10;
 
     private final static ClassLoader MAIN_CL = App.class.getClassLoader();
-//    private final static ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
 
-    private static void startWatchingAndProcessing(Path codeJarsLocation, Subject subject) throws IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+
+    private static void startWatchingAndProcessing(Path codeJarsLocation, Subject subject, ExecutorService executor) throws IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         WatchService watchService = FileSystems.getDefault().newWatchService();
         WatchKey watchKey = codeJarsLocation.register(watchService, ENTRY_CREATE, ENTRY_MODIFY);
         watchKey.reset();
@@ -58,7 +59,7 @@ public class App {
                 LOGGER.info("Path event for file: {}", filePath);
                 if(!filePath.equals(lastEventPath)){
                     if (filePath.toFile().getName().endsWith(".jar")) {
-                        processJarFile(filePath.toFile(), subject);
+                        processJarFile(filePath.toFile(),subject, executor);
                     }
                 }
                 lastEventPath = filePath;
@@ -68,33 +69,45 @@ public class App {
         }
     }
 
-    private static void processJarFile(File foundJarFile, Subject subject) throws IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    private static void processJarFile(File foundJarFile, Subject subject, ExecutorService executor) throws IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         LOGGER.info("Processing jar file: {}", foundJarFile.getName());
         Set<String> foundClasses;
         try {
             JarFile jarFile = new JarFile(foundJarFile);
             foundClasses = getJarClasses(jarFile);
             URL jarUrl = foundJarFile.toURI().toURL();
-            CodeSource codeSource = new CodeSource(jarUrl, (CodeSigner[]) null);
-            ClassLoader cl = new URLClassLoader(new URL[]{jarUrl}, MAIN_CL);
-            ProtectionDomain protectionDomain = new ProtectionDomain(codeSource, null, cl,new Principal[]{new RolePrincipal("uma_authorization")});
             for (String foundClass : foundClasses) {
                 LOGGER.debug("Checking class: {}",foundClass);
-                Class<?> aClass = cl.loadClass(foundClass);
-                if (Runnable.class.isAssignableFrom(aClass)) {
-                    LOGGER.debug("Running the runnable class {}",foundClass);
-                    Constructor<?> constructor = aClass.getConstructor();
-                    Runnable task = (Runnable) constructor.newInstance();
-                    task.run();
-                }else if(PrivilegedExceptionAction.class.isAssignableFrom(aClass)){
-                    LOGGER.debug("Running a priviledged action from class {}",aClass);
-                    Constructor<?> constructor = aClass.getConstructor();
-                    PrivilegedExceptionAction task = (PrivilegedExceptionAction) constructor.newInstance();
-                    Subject.doAs(subject, task);
-                }
+                Subject.doAsPrivileged(subject, new PrivilegedAction<Object>() {
+                    @Override
+                    public Object run() {
+                        try {
+                            ClassLoader cl = new URLClassLoader(new URL[]{jarUrl}, MAIN_CL);
+                            Class<?> aClass = cl.loadClass(foundClass);
+                            submitExecution(aClass, executor);
+                        } catch (Exception e) {
+                            LOGGER.error("Error processing {}",foundJarFile.getName(),e);
+                        }
+                        return null;
+                    }
+                }, AccessController.getContext());
             }
         } catch (Exception e) {
             LOGGER.error("Error processing {}",foundJarFile.getName(),e);
+        }
+    }
+
+    private static void submitExecution( Class<?> aClass, ExecutorService executor) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        if (Runnable.class.isAssignableFrom(aClass)) {
+            LOGGER.debug("Running the runnable class {}",aClass.getCanonicalName());
+            Constructor<?> constructor = aClass.getConstructor();
+            Runnable task = (Runnable) constructor.newInstance();
+            executor.submit(task);
+        }else if(Callable.class.isAssignableFrom(aClass)){
+            LOGGER.debug("Running a priviledged action from class {}",aClass.getCanonicalName());
+            Constructor<?> constructor = aClass.getConstructor();
+            Callable task = (Callable) constructor.newInstance();
+            executor.submit(task);
         }
     }
 
@@ -135,7 +148,18 @@ public class App {
         loginContext.login();
         Subject subject = loginContext.getSubject();
 
+        ThreadFactory threadFactory = Subject.doAsPrivileged(subject, new PrivilegedAction<ThreadFactory>() {
+            @Override
+            public ThreadFactory run() {
+                ThreadFactory tf = Executors.privilegedThreadFactory();
+                return tf;
+            }
+        }, null);
+
+        ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE, threadFactory);
+
         Path codeJarsLocation = getJarsPath();
+
 
         if(!codeJarsLocation.toFile().exists()){
             LOGGER.error("Code jars location {} does not exists",codeJarsLocation);
@@ -146,14 +170,14 @@ public class App {
         for (File foundJarFile : foundJarFiles) {
             LOGGER.info("Processing intially found jar: {}",foundJarFile.getName());
             try {
-                processJarFile(foundJarFile, subject);
+                processJarFile(foundJarFile, subject, executor);
             } catch (IOException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e ) {
                 LOGGER.error("processing jar issue", e);
             }
         }
 
         try {
-            startWatchingAndProcessing(codeJarsLocation, subject);
+            startWatchingAndProcessing(codeJarsLocation, subject, executor);
         } catch (Exception e) {
             LOGGER.error("error jar processing",e);
         }
