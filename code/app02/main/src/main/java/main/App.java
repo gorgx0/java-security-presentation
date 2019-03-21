@@ -97,7 +97,7 @@ public class App {
         }
     }
 
-    private static void submitExecution( Class<?> aClass, ExecutorService executor) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    private static void submitExecution( Class<?> aClass, ExecutorService executor) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ExecutionException, InterruptedException {
         if (Runnable.class.isAssignableFrom(aClass)) {
             LOGGER.debug("Running the runnable class {}",aClass.getCanonicalName());
             Constructor<?> constructor = aClass.getConstructor();
@@ -107,7 +107,8 @@ public class App {
             LOGGER.debug("Running a priviledged action from class {}",aClass.getCanonicalName());
             Constructor<?> constructor = aClass.getConstructor();
             Callable task = (Callable) constructor.newInstance();
-            executor.submit(task);
+            Future<String> result = executor.submit(task);
+            System.out.println(result.get());
         }
     }
 
@@ -155,6 +156,13 @@ public class App {
                 return tf;
             }
         }, null);
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                LOGGER.error("Exception from thread {}",t,e);
+            }
+        });
 
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE, threadFactory);
 
