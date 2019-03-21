@@ -3,13 +3,15 @@
 
 grant {
   permission java.util.PropertyPermission "CODE_PROP_FILE", "read";
-  permission java.io.FilePermission "<<ALL FILES>>", "read";
+  permission java.io.FilePermission "keycloak.config.json", "read";
+  permission java.io.FilePermission "/tmp/-", "read";
   permission java.lang.RuntimePermission "createClassLoader";
   permission java.lang.RuntimePermission "accessClassInPackage.sun.reflect";
   permission java.lang.RuntimePermission "modifyThread";
   permission javax.security.auth.AuthPermission "createLoginContext.*";
   permission java.lang.RuntimePermission "getClassLoader";
   permission java.lang.RuntimePermission "setContextClassLoader";
+  permission java.lang.RuntimePermission "setDefaultUncaughtExceptionHandler";
   // required for debugging with Intellij
   permission java.util.PropertyPermission "intellij.debug.agent", "read";
   permission java.util.PropertyPermission "intellij.debug.agent", "write";
@@ -28,9 +30,11 @@ grant {
   permission javax.security.auth.AuthPermission "doAsPrivileged" ;
   permission javax.security.auth.AuthPermission "getSubject";
   permission javax.security.auth.AuthPermission "doAs";
+
 };
 
 grant      principal org.keycloak.adapters.jaas.RolePrincipal "uma_authorization" {
   permission java.util.PropertyPermission "SECRET_KEY_LOCATION", "read";
+  permission java.io.FilePermission "/etc/os-release", "read";
 };
 
